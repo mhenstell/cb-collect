@@ -20,7 +20,6 @@ try:
     ver = cur.fetchone()
     print ver    
     
-
 except psycopg2.DatabaseError, e:
     print 'Error %s' % e    
     sys.exit(1)
@@ -36,6 +35,7 @@ signal.signal(signal.SIGINT, signal_handler)
 
 while True:
 
+        start = time.time()
         stations = client.stations()
 
         timestamp = psycopg2.TimestampFromTicks(time.time())
@@ -52,5 +52,9 @@ while True:
                         cur.execute(sql)
 
                 oldStations[sid] = station
+
+        end = time.time()
+        runlength = int(end - start)
+        cur.execute("insert into runlog(runlength) values(%i)", runlength)
 
         time.sleep(30)
