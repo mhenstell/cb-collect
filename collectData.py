@@ -35,8 +35,14 @@ signal.signal(signal.SIGINT, signal_handler)
 
 while True:
 
+    
         start = time.time()
-        stations = client.stations()
+        
+        try:
+            stations = client.stations()
+        except exception as e:
+            print e
+            continue
 
         timestamp = psycopg2.TimestampFromTicks(time.time())
         print "Updating %s" % timestamp
@@ -56,5 +62,7 @@ while True:
         end = time.time()
         runlength = int(end - start)
         cur.execute("insert into runlog(runlength) values(%i)", runlength)
+
+
 
         time.sleep(30)
