@@ -61,7 +61,7 @@ while True:
 
         end = time.time()
         runlength = int(end - start)
-        cur.execute("insert into runlog(runlength) values(%i)", runlength)
+        cur.execute("insert into runlog(runlength) values(%i)" % runlength)
 
 
 
