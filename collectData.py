@@ -40,7 +40,7 @@ while True:
         
         try:
             stations = client.stations()
-        except exception as e:
+        except Exception as e:
             print e
             continue
 
